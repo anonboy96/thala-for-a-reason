@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Thala For a Reason!!</title>
+  <style>
+    /* Basic styling for the page */
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 50px;
+    }
+    input[type="text"] {
+      padding: 8px;
+      margin: 5px;
+    }
+    button {
+      padding: 8px 20px;
+      margin: 5px;
+      cursor: pointer;
+    }
+    .popup .popuptext {
+visibility: hidden;
+background-color: #555;
+color: #fff;
+text-align: center;
+border-radius: 6px;
+padding: 8px 0;
+z-index: 1;
+bottom: 125%;
+left: 50%;
+margin-left: -80px;
+}
+.popup .show {
+visibility: visible;
+-webkit-animation: fadeIn 1s;
+animation: fadeIn 1s;
+}
+@-webkit-keyframes fadeIn {
+from {opacity: 0;} 
+to {opacity: 1;}
+}
+@keyframes fadeIn {
+from {opacity: 0;}
+to {opacity:1 ;}
+}
+  </style>
+</head>
+<body>
+
+  <h1>Check Thala For A Reason</h1>
+  
+  <input type="text" id="inputString" placeholder="Enter a string with numbers">
+  <br><br>
+  
+  <button onclick="calculateAndCheck()">Try!!</button>
+  <div class="popup" onclick="calculateAndCheck()" >
+    <video class="popuptext" id="myPopup" style="width:300px;" >
+    <source src="thala.mp4" type="video/mp4">
+    </video>
+    </div>
+
+  <br><br>
+  
+  <p id="result"></p>
+  
+  <script>
+
+    function calculateAndCheck() {
+      var popup = document.getElementById("myPopup");
+      popup.classList.toggle("show");
+      const inputString = document.getElementById('inputString').value;
+
+      if (!inputString.trim()) {
+        document.getElementById('result').innerText = "Please enter some text.";
+        return;
+      }
+
+      const numbers = inputString.match(/\d+/g); // Extract numbers from the input string
+      let operationResult = '';
+
+      for (const number of numbers) {
+        let num = number.split('').map(Number); // Split number into individual digits
+        let tempResult = '';
+
+        if (num.length > 1) {
+          // Addition
+          const sum = num.reduce((acc, digit) => acc + digit, 0);
+          tempResult += `(${num.join('+')}) = ${sum}`;
+
+          if (sum === 7) {
+            operationResult = `Addition: ${tempResult}`;
+            break;
+          }
+        }
+
+        // Subtraction
+        const subtraction = num.reduce((acc, digit) => acc - digit);
+        tempResult += `(${num.join('-')}) = ${subtraction}`;
+
+        if (subtraction === 7) {
+          operationResult = `Subtraction: ${tempResult}`;
+          break;
+        }
+
+        // Multiplication
+        const multiplication = num.reduce((acc, digit) => acc * digit);
+        tempResult += `(${num.join('x')}) = ${multiplication}`;
+
+        if (multiplication === 7) {
+          operationResult = `Multiplication: ${tempResult}`;
+          break;
+        }
+
+        // Division
+        const division = num.reduce((acc, digit) => acc / digit);
+        tempResult += `(${num.join('/')}) = ${division}`;
+
+        if (division === 7) {
+          operationResult = `Division: ${tempResult}`;
+          break;
+        }
+      }
+
+      if (operationResult !== '') {
+        document.getElementById('result').innerText = `${operationResult}`;
+        if (popup.paused){ 
+          
+             popup.play(); 
+             
+           }
+            else{ 
+              document.getElementById('result').innerText = `Not Thala For A Reason !!.`;        
+           } 
+      } else {
+        document.getElementById('result').innerText = `None of the operations result in 7.`;
+      }
+    }
+  </script>
+</body>
+</html>
